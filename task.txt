@@ -1,0 +1,225 @@
+1.Ans to the ques no one:
+
+
+<?php
+
+function isValid($s) {
+    $stack = [];
+    $mapping = [')' => '(', '}' => '{', ']' => '['];
+
+    for ($i = 0; $i < strlen($s); $i++) {
+        $char = $s[$i];
+        if (array_key_exists($char, $mapping)) {
+            $top_element = array_pop($stack) ?: '#';
+            if ($mapping[$char] != $top_element) {
+                return false;
+            }
+        } else {
+            array_push($stack, $char);
+        }
+    }
+
+    return empty($stack);
+}
+
+// Test cases
+echo isValid("()[]{}") ? "True\n" : "False\n";  // Output: True
+echo isValid("([)]") ? "True\n" : "False\n";    // Output: False
+?>
+
+
+
+
+2.Ans to the ques no two:
+
+<?php
+
+class Circle {
+    private $radius;
+
+    public function __construct($radius) {
+        $this->radius = $radius;
+    }
+
+    public function area() {
+        return M_PI * $this->radius ** 2;
+    }
+}
+
+class Rectangle {
+    private $width;
+    private $height;
+
+    public function __construct($width, $height) {
+        $this->width = $width;
+        $this->height = $height;
+    }
+
+    public function area() {
+        return $this->width * $this->height;
+    }
+}
+
+// Example usage:
+$circle = new Circle(5);
+echo "Area of the circle: " . $circle->area() . "\n";
+
+$rectangle = new Rectangle(4, 6);
+echo "Area of the rectangle: " . $rectangle->area() . "\n";
+
+?>
+
+
+
+3.Ans to the question no three:
+<?php
+
+// Define a logging interface
+interface Logger {
+    public function log($message);
+}
+
+// Implement a file logger
+class FileLogger implements Logger {
+    private $logFile;
+
+    public function __construct($logFile) {
+        $this->logFile = $logFile;
+    }
+
+    public function log($message) {
+        file_put_contents($this->logFile, $message . "\n", FILE_APPEND);
+    }
+}
+
+// Implement a database logger
+class DatabaseLogger implements Logger {
+    private $connection;
+
+    public function __construct($host, $username, $password, $database) {
+        $this->connection = new mysqli($host, $username, $password, $database);
+        if ($this->connection->connect_error) {
+            die("Connection failed: " . $this->connection->connect_error);
+        }
+    }
+
+    public function log($message) {
+        $sql = "INSERT INTO logs (message) VALUES ('$message')";
+        $this->connection->query($sql);
+    }
+}
+
+// Example usage
+$fileLogger = new FileLogger('logfile.txt');
+$fileLogger->log('This is a log message written to a file.');
+
+$databaseLogger = new DatabaseLogger('localhost', 'username', 'password', 'logs_db');
+$databaseLogger->log('This is a log message written to a database.');
+
+?>
+
+
+
+4.Ans to the ques no four:
+
+<?php
+
+class Employee {
+    private $name;
+    private $id;
+    private $salary;
+
+    public function __construct($name, $id, $salary) {
+        $this->name = $name;
+        $this->id = $id;
+        $this->setSalary($salary); // Set salary securely through setter method
+    }
+
+    // Getter method for name
+    public function getName() {
+        return $this->name;
+    }
+
+    // Getter method for ID
+    public function getId() {
+        return $this->id;
+    }
+
+    // Setter method for salary with encapsulation
+    public function setSalary($salary) {
+        if ($salary >= 0) {
+            $this->salary = $salary;
+        } else {
+            throw new Exception("Salary cannot be negative.");
+        }
+    }
+
+    // Getter method for salary
+    public function getSalary() {
+        return $this->salary;
+    }
+}
+
+// Example usage
+$employee1 = new Employee("John Doe", 101, 50000);
+echo "Employee Name: " . $employee1->getName() . "\n";
+echo "Employee ID: " . $employee1->getId() . "\n";
+echo "Employee Salary: $" . $employee1->getSalary() . "\n";
+
+// Attempt to set negative salary (will throw an exception)
+try {
+    $employee1->setSalary(-1000);
+} catch (Exception $e) {
+    echo "Error: " . $e->getMessage() . "\n";
+}
+
+?>
+
+
+ 5.Ans to the ques no five:
+
+<?php
+
+// Base class Animal
+class Animal {
+    public function makeSound() {
+        return "Some generic sound";
+    }
+}
+
+// Subclass Dog
+class Dog extends Animal {
+    public function makeSound() {
+        return "Woof!";
+    }
+}
+
+// Subclass Cat
+class Cat extends Animal {
+    public function makeSound() {
+        return "Meow!";
+    }
+}
+
+// Subclass Cow
+class Cow extends Animal {
+    public function makeSound() {
+        return "Moo!";
+    }
+}
+
+// Example usage demonstrating polymorphism
+$animals = [
+    new Dog(),
+    new Cat(),
+    new Cow()
+];
+
+foreach ($animals as $animal) {
+    echo get_class($animal) . " says: " . $animal->makeSound() . "\n";
+}
+
+?>
+
+Ans to the ques no six:
+
